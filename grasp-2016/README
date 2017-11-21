@@ -1,0 +1,49 @@
+         General Relativistic Atomic Structure Package -- GRASP2K
+         a development version
+
+
+	                COPYRIGHT  2015
+
+This package is a development version of GRASP2K by
+P. Jonsson, G. Gaigalas, J. Bieron, C. Froese Fischer, and I.P. Grant
+Computer Physics Communication, 184, 2197 - 2203 (2013)
+
+This package in turn, is an extension and modification of GRASP92 by
+Farid Parpia, Charlotte Froese Fischer, and Ian Grant.
+Computer Physics Communication, 94, 249-271 (1996)
+
+Development performed by:
+   Jacek Bieron              email: jacek.bieron@uj.edu.pl
+   Charlotte Froese Fischer  email: charlotte.fischer@nist.gov
+   Gediminas Gaigalas        email: Gediminas.Gaigalas@tfai.vu.lt
+   Ian Grant                 email: iangrant15@btinternet.com
+   Per Jonsson               email: per.jonsson@mah.se
+
+Other Collaborators:
+   The Computational Atomic Structure Group
+
+                      ACKNOWLEDGEMENTS
+
+This work was supported by the Chemical Sciences, Geosciences and
+Biosciences Division, Office of Basic Energy Sciences, Office of 
+Science, U.S. Department of Energy, the Swedish Research Council, 
+the Visby program of the Swedish Institute, the Polish Ministry of
+Science and Higher Education (MNiSW) in the framework of the project
+No.~N~N202~014140, the European Regional Development Fund in the
+framework of the Polish Innovation Economy Operational Program
+(contract no. POIG.02.01.00-12-023/08).
+
+
+                      DISCLAIMER
+
+The authors make  no warranties,  express or implied,  that 
+this software or its  accompanying documentation are free of  
+error or that  they will meet your requirements for any par- 
+ticular application.  Neither this software nor its accompa-  
+nying documentation should be relied  upon for solving prob- 
+lems if an incorrect solution could result in injury or loss  
+of, or damage to, property. If you use this software or  its 
+accompanying documentation,  you do so entirely  at your own  
+risk;  the authors disclaim all liability for direct or con-  
+sequential damage.                                           
+

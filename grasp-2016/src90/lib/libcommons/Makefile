@@ -1,0 +1,57 @@
+.SUFFIXES: .f90 .mod
+
+LIBDIR = $(GRASP)/lib
+LIBA = $(LIBDIR)/libcommons90.a
+F90 = $(FC)
+F90_FLAGS = $(FC_FLAGS)
+
+RM = /bin/rm -f
+
+VASTO = vast_kind_param_M.o
+MODOBJ = \
+   memory_man.o \
+   blk_C.o buffer_C.o \
+   cons_C.o debug_C.o \
+   \
+   def_C.o default_C.o dumx_C.o iounit_C.o jj2lsj_C.o \
+   \
+   eigv_C.o facts_C.o foparm_C.o lib92p_C.o m_C.o mcp_C.o mtjj_C.o mtjj2_C.o \
+   npar_C.o orb_C.o prnt_C.o \
+   \
+   ribojj_C.o ribojj9_C.o ribojj11_C.o stat_C.o syma_C.o \
+\
+   terms_C.o trk_C.o \
+\
+   rang_Int_C.o
+
+install : $(LIBA)
+$(LIBA) : ${VASTO} $(MODOBJ)
+	@echo " Building install libcommons90.a"
+	ar -curs $(LIBA)  $?
+
+${MODOBJ} : ${VASTO}
+
+clean:
+	-rm -f *.o *.mod
+
+.f90.o:
+	@echo "Compiling source file $< into $@"
+	$(F90) -c $(F90_FLAGS) $<
+
+.f90.mod:
+	$(F90) -c $(F90_FLAGS) $?
+
+SRC =  \
+   memory_man.f90 \
+   blk_C.f90 buffer_C.f90 \
+   cons_C.f90 debug_C.f90 \
+   \
+   def_C.f90 default_C.f90 dumx_C.f90  iounit_C.f90 jj2lsj_C.o \
+   \
+   eigv_C.f90 facts_C.f90 foparm_C.f90 lib92p_C.f90 m_C.f90 mcp_C.f90 mtjj_C.f90 mtjj2_C.f90 \
+   npar_C.f90 orb_C.f90 prnt_C.f90 \
+   \
+   ribojj_C.f90 ribojj9_C.f90 ribojj11_C.f90 stat_C.f90 syma_C.f90 \
+   terms_C.f90 trk_C.f90 \
+\
+   rang_Int_C.f90

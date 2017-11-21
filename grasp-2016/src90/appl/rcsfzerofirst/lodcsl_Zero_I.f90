@@ -1,0 +1,9 @@
+      MODULE lodcsl_Zero_I
+      INTERFACE
+      SUBROUTINE lodcsl_Zero (NEXT_BLOCK)
+!      INTEGER NNNW
+!      PARAMETER(NNNW=214)
+      LOGICAL, INTENT(OUT)  :: NEXT_BLOCK
+      END SUBROUTINE
+      END INTERFACE
+      END MODULE

@@ -1,0 +1,42 @@
+.SUFFIXES: .f90 .mod
+
+LIBDIR = $(GRASP90)/lib90
+LIBA = $(LIBDIR)/lib9290.a
+
+LIBMOD = -lcommons90
+LIBOBJ = $(OBJ)
+MODDIR = ../libcommons
+VASTO = $(MODDIR)/vast_kind_param_M.o
+
+RM = /bin/rm -f
+
+MODOBJ = \
+
+
+OBJ = \
+   alcbuf_I.o convrt_double_I.o convrt_I.o clrx_I.o cre_I.o factt_I.o \
+   chkplt_I.o cord_I.o ichkq1_I.o ichkq2_I.o getyn_I.o ichop_I.o iq_I.o  \
+   skrc_I.o cslh_I.o itrig_I.o ispar_I.o itjpo_I.o jcup_I.o jqs_I.o  \
+   lodcsl_I.o lodcsh2_I.o lodplt_I.o lodiso_I.o openfl_I.o pack_I.o \
+   iunpck_I.o parsjl_I.o prsrcn_I.o prsrsl_I.o setcsla_I.o setiso_I.o \
+   setcsll_I.o setmc_I.o setqna_I.o speak_I.o starttime_I.o stoptime_I.o \
+   calen_I.o setj_I.o ltab_I.o lodcsh_I.o \
+   \
+   alcbuf.o convrt_double.o convrt.o clrx.o cre.o \
+   chkplt.o cord.o ichkq1.o ichkq2.o factt.o getyn.o ichop.o iq.o  \
+   skrc.o cslh.o itrig.o ispar.o itjpo.o jcup.o jqs.o  \
+   lodcsl.o lodcsh2.o lodplt.o lodiso.o openfl.o pack.o \
+   iunpck.o parsjl.o prsrcn.o prsrsl.o setcsla.o setiso.o \
+   setcsll.o setmc.o setqna.o speak.o starttime.o stoptime.o \
+   calen.o setj.o ltab.o lodcsh.o
+
+install : $(LIBA)
+$(LIBA) : $(LIBOBJ) 
+	@echo " Building " $(LIBA)
+	ar -crvs $(LIBA)  $?
+
+clean:
+	-rm -f *.o *.mod core
+
+.f90.o:
+	$(F90) -c $(F90_FLAGS) $< -I  $(MODDIR) -I .  -o $@

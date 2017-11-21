@@ -1,0 +1,2 @@
+      INTEGER*4   iendc, irow
+!CFF  For efficiency for ifort -8  when NCF < 2^31

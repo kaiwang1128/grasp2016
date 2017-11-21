@@ -1,0 +1,67 @@
+#!/bin/bash
+# -------------------------------------------------------------------------------------------------------------------------------------
+# GRASP2K ENVIRONMENT FLAGS
+# -------------------------------------------------------------------------------------------------------------------------------------
+#
+# Define the following global variables according to your environment and
+# source this script or add these definitions to your terminal configuration 
+# file, eg. ~/.cshrc, ~/.bashrc or ~/.profile.
+#
+# Current version: Linux, ifortran 
+#
+# -------------------------------------------------------------------------------------------------------------------------------------
+# Set up main flags
+# -------------------------------------------------------------------------------------------------------------------------------------
+export   FC=ifort                                           # Fortran compiler 
+export   FC_FLAGS="-O1 -save -zero -align all -W0 -mcmodel=large"          # Serial code compiler flags
+export   FC_LD="-static-intel -Bstatic"                           # Serical linker flags
+export   GRASP="${PWD}"                                        # Location of the grasp2k root directory
+export   LAPACK_LIB="-llapackd -llapacku -lblas"               # Libraries to be searched
+export   LAPACK_DIR="${GRASP}/lib"                             # Location of LAPACK library 
+#export   LAPACK_LIB="-llapack -lblas"                          # Libraries to be searched
+#export   LAPACK_DIR="/usr/lib"                                 # Location of LAPACK library 
+export   GRASPLIBS="-l92 -lnjgraf -ldvdson"                    # Libraries to be searched 
+export   NEWGRASPLIBS="-lrang -l92 -ldvdson"                   # Libraries to be searched 
+export   FC_MALLOC="LINUX"                                     # Memory allocation routine (available for Linux and other systems)
+export   GRASP_INCLUDES="${GRASP}/src/lib/def"                 # Location of parameter definition file 
+export   F90=${FC}                                             # Fortran compiler
+export   F90_FLAGS=${FC_FLAGS}                                 # Serial code compiler flag
+# -------------------------------------------------------------------------------------------------------------------------------------
+# Set up MPI related flags
+# -------------------------------------------------------------------------------------------------------------------------------------
+export   FC_MPI="mpif90"                                       # MPICH/mpif90 compiler
+export   FC_MPIFLAGS="${FC_FLAGS}"                             # Parallel code compiler flags
+export   FC_MPILD="-O -mcmodel=large" #-static"                               # Serical linker flags
+# -------------------------------------------------------------------------------------------------------------------------------------
+# Set up the grid parameter definition file (src/lib/def/parameters.def)
+# See page 31 of the Grasp2k Manual for definitions and dependencies
+# -------------------------------------------------------------------------------------------------------------------------------------
+export   NNNP=590                                              # Total number of gridpoints, default is 590
+export   NNN1=$(( ${NNNP} + 10 ))                              # NNN1 should always be equal to NNNP + 10
+# -------------------------------------------------------------------------------------------------------------------------------------
+# Create the parameter file - don't edit this!
+# Note that old parameter file will be overwritten! Examples of parameter files can be found in the src/lib/def directory.
+# -------------------------------------------------------------------------------------------------------------------------------------
+# If old file exists - remove it
+if [ -a ${GRASP_INCLUDES}/parameters.def ]
+then
+   rm ${GRASP_INCLUDES}/parameters.def
+fi
+# Create new file
+echo ""                                                                       >  ${GRASP_INCLUDES}/parameters.def
+echo "!     Grasp2k parameter file"                                           >> ${GRASP_INCLUDES}/parameters.def
+echo "!     See Manual page 31 for definitions and dependencies"              >> ${GRASP_INCLUDES}/parameters.def
+echo ""                                                                       >> ${GRASP_INCLUDES}/parameters.def
+echo "      integer KEYORB"                                                   >> ${GRASP_INCLUDES}/parameters.def
+echo "      integer NNNP, NNN1, NNNW, NNNWM1, NNNWM2, NNNWP, NNNQN, NNNTJV"   >> ${GRASP_INCLUDES}/parameters.def
+echo ""                                                                       >> ${GRASP_INCLUDES}/parameters.def
+echo "      parameter (KEYORB = 215)"                                         >> ${GRASP_INCLUDES}/parameters.def
+echo "      parameter (NNNP = ${NNNP})"                                       >> ${GRASP_INCLUDES}/parameters.def
+echo "      parameter (NNN1 = ${NNN1})"                                       >> ${GRASP_INCLUDES}/parameters.def
+echo "      parameter (NNNW = 214)"                                           >> ${GRASP_INCLUDES}/parameters.def
+echo "      parameter (NNNWM1 = 213)"                                         >> ${GRASP_INCLUDES}/parameters.def
+echo "      parameter (NNNWM2 = 212)"                                         >> ${GRASP_INCLUDES}/parameters.def
+echo "      parameter (NNNWP = 54)"                                           >> ${GRASP_INCLUDES}/parameters.def
+echo "      parameter (NNNQN = 10)"                                           >> ${GRASP_INCLUDES}/parameters.def
+echo "      parameter (NNNTJV = 10)"                                          >> ${GRASP_INCLUDES}/parameters.def
+# -------------------------------------------------------------------------------------------------------------------------------------

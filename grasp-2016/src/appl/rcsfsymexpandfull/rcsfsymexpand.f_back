@@ -1,0 +1,187 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!     rcsfsymexpand
+!
+!     This program reads the symbolic list rcsf.inp and adds
+!     CSFs needed to complete the calculation of matrix elements
+!     between CSFs in symboic blocks
+!      
+!     WRitten by Per Jonsson, Malmo University, Sweden
+!     May 2017
+!      
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!      
+
+
+      subroutine rcsfsymexpand
+      implicit none
+      character*1500 :: string(5)
+      character*300 :: line1,line2,line3
+      character*2 :: string1,string2,string3,string4,nmax(21),sym(21) 
+      integer :: i,j,nlength,nonsymb,n,keep,nc,m,iunit
+
+      write(*,*)
+      write(*,*) 'rcsfsymexpand'
+      write(*,*)
+
+      sym(1)  = 's '
+      sym(2)  = 'p-'
+      sym(3)  = 'p '
+      sym(4)  = 'd-'
+      sym(5)  = 'd '
+      sym(6)  = 'f-'
+      sym(7)  = 'f '
+      sym(8)  = 'g-'
+      sym(9)  = 'g '
+      sym(10) = 'h-'
+      sym(11) = 'h '
+      sym(12) = 'i-'
+      sym(13) = 'i '
+      sym(14) = 'k-'
+      sym(15) = 'k '
+      sym(16) = 'l-'
+      sym(17) = 'l '
+      sym(18) = 'm-'
+      sym(19) = 'm '
+      sym(20) = 'n-'
+      sym(21) = 'n '
+
+      open (19, file = 'rcsf.inp', status = 'old', form = 'formatted')
+      open (20, file = 'rcsf.exp' ,status = 'unknown', form = 'formatted')
+
+! Read and analyze header to determine the highest principal quantum
+! number for each symmetry. Also add orbitals to the header
+
+      do i = 1, 5
+         read (19,'(a)') string(i)
+         write(*,*) trim(string(i))
+      end do
+
+      nlength = len_trim(string(4)) + 1
+
+      write(*,*) trim(string(5))
+
+      write(*,*) ' give the number of non symbolic orbitals'
+      read(*,*) nonsymb
+
+! Analyze the orbtitals and determine the maximum n for each symmetry
+! of the non-symbolic orbitals
+
+
+
+! Analyze the orbtitals and determine the maximum n for each symmetry
+
+      do i = nonsymb+1,nlength/5
+         string1 = string(4)(5*(i-1)+4:5*i)   ! symmmetry string
+         string2 = string(4)(5*(i-1)+2:5*i-2) ! n string
+         do j = 1,21
+            if (string1.eq.sym(j)) then
+               nmax(j) = string2
+            end if
+         end do
+      end do
+
+      do i = 1,21
+        write(*,*) nmax(i),sym(i)
+      end do
+
+   10 continue
+      read (19, '(a)', end = 99) line1
+      write(*,*) trim(line1)
+
+* Count the number of symbolic orbitals in the CSF 
+
+      n = 0
+      do i = nonsymb+1,nlength/5
+         if (index(line1,string(4)(5*(i-1)+1:5*i)).gt.0) n = n + 1
+      end do
+
+      keep = 1
+      if (n.eq.1) then
+        nc = 0
+        m = len_trim(line1)
+        string1 = line1(m-5:m-4)         ! sym of symbolic orbital 1
+        string2 = line1(m-7:m-6)         ! n of symbolic orbital 1
+        do i = 1,21
+          if ((string1.eq.sym(i)).and.(string2.eq.nmax(i))) then
+            nc = nc + 1
+          end if   
+        end do   
+        if (nc.lt.1) keep = 0            ! symbolic orbital should have
+      elseif (n.eq.2) then               ! max n for keeping
+        nc = 0 
+        m = len_trim(line1)
+        string1 = line1(m-5:m-4)         ! sym of symbolic orbital 1
+        string2 = line1(m-7:m-6)         ! n of symbolic orbital 1
+        string3 = line1(m-14:m-13)       ! sym of symbolic orbital 2
+        string4 = line1(m-16:m-15)       ! n of symbolic orbital 2
+        if (string1.ne.string3) then
+          do i = 1,21
+             if ((string1.eq.sym(i)).and.(string2.eq.nmax(i))) then
+                nc = nc + 1
+             end if   
+             if ((string3.eq.sym(i)).and.(string4.eq.nmax(i))) then
+                nc = nc + 1
+             end if   
+          end do   
+          if (nc.lt.2) keep = 0     ! Both symbolic orbitals should
+        end if                      ! have max n for keeping
+      end if                     
+            
+      READ (19, '(A)') LINE2
+      READ (19, '(A)') LINE3
+      WRITE(*,*) TRIM(LINE2)
+      WRITE(*,*) TRIM(LINE3)
+
+      if (keep.eq.1) then
+         if (n.eq.0) then 
+            iunit = 1312
+         else
+            iunit = 1313
+         end if
+         write(iunit,'(a)') trim(line1)
+         write(iunit,'(a)') trim(line2)
+         write(iunit,'(a)') trim(line3)
+      end if
+
+      GOTO 10
+
+  99  CONTINUE
+
+      rewind(19)
+      rewind(1312)
+      rewind(1313)
+
+
+      do i = 1,5
+         write(19,'(a)') trim(string(i))
+      end do
+
+! Start by writing all the non-symbolic CSFs
+
+   11 continue
+      read (1312,'(a)', end = 998) line1
+      read (1312,'(a)') line2
+      read (1312,'(a)') line3
+      write(19,'(a)') trim(line1)
+      write(19,'(a)') trim(line2)
+      write(19,'(a)') trim(line3)
+      go to 11  
+  998 continue     
+
+! Here comes the symbolic CSFs
+
+   12 continue
+      read (1313,'(a)', end = 999) line1
+      read (1313,'(a)') line2
+      read (1313,'(a)') line3
+      write(19,'(a)') trim(line1)
+      write(19,'(a)') trim(line2)
+      write(19,'(a)') trim(line3)
+      go to 12  
+  999 continue     
+
+
+      close(19)
+
+      end
+    

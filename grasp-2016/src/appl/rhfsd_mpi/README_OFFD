@@ -1,0 +1,245 @@
+An diagonal version is on monster
+
+
+per@Monster:~/programs/grasp/grasp2k_light/src/appl/rhfs_diag$ diff angdata.f ../rhfs/angdata.f
+per@Monster:~/programs/grasp/grasp2k_light/src/appl/rhfs_diag$ diff chkplt.f ../rhfs/chkplt.f
+per@Monster:~/programs/grasp/grasp2k_light/src/appl/rhfs_diag$ diff engouth.f ../rhfs/engouth.f
+27,28c27,28
+< C      WRITE (24,300)
+< C      WRITE (24,301)
+---
+>       WRITE (24,300)
+>       WRITE (24,301)
+37c37
+< C         WRITE (24,302) I,LABJ(JTOT(J)),LABP(IP),EAU,ECM,EEV
+---
+>          WRITE (24,302) I,LABJ(JTOT(J)),LABP(IP),EAU,ECM,EEV
+46,47c46,47
+< C            WRITE (24,303)
+< C            WRITE (24,301)
+---
+>             WRITE (24,303)
+>             WRITE (24,301)
+56c56
+< C               WRITE (24,302) I,LABJ(JTOT(J)),LABP(IP),EAU,ECM,EEV
+---
+>                WRITE (24,302) I,LABJ(JTOT(J)),LABP(IP),EAU,ECM,EEV
+64,65c64,65
+< C            WRITE (24,304)
+< C            WRITE (24,301)
+---
+>             WRITE (24,304)
+>             WRITE (24,301)
+74c74
+< C               WRITE (24,302) I,LABJ(JTOT(J)),LABP(IP),EAU,ECM,EEV
+---
+>                WRITE (24,302) I,LABJ(JTOT(J)),LABP(IP),EAU,ECM,EEV
+per@Monster:~/programs/grasp/grasp2k_light/src/appl/rhfs_diag$ diff gethfd.f ../rhfs/gethfd.f
+per@Monster:~/programs/grasp/grasp2k_light/src/appl/rhfs_diag$ diff getmixblock.f ../rhfs/getmixblock.f
+per@Monster:~/programs/grasp/grasp2k_light/src/appl/rhfs_diag$ diff hfs92.f ../rhfs/hfs92.f
+per@Monster:~/programs/grasp/grasp2k_light/src/appl/rhfs_diag$ diff hfs_gg.f ../rhfs/hfs_gg.f
+170,173c170,172
+< C              IF (((IDIFF .EQ. 0) .AND. (IR. GE. IC)) .OR.
+< C     :          (IDIFF .EQ. 2) .OR.
+< C     :         ((IDIFF .EQ. 4) .AND. (KT .EQ. 2))) THEN
+<               IF ((IDIFF .EQ. 0) .AND. (IR. GE. IC)) THEN
+---
+>               IF (((IDIFF .EQ. 0) .AND. (IR. GE. IC)) .OR.
+>      :          (IDIFF .EQ. 2) .OR.
+>      :         ((IDIFF .EQ. 4) .AND. (KT .EQ. 2))) THEN
+246c245
+<                   DO 7 KK = K,K
+---
+>                   DO 7 KK = 1,NVEC
+364c363
+<             DO KK = K,K
+---
+>             DO KK = 1,NVEC
+434c433
+< *      WRITE (24,302)
+---
+>       WRITE (24,302)
+438c437
+<         DO 12 II = I,I
+---
+>         DO 12 II = 1,NVEC
+498,503c497,502
+< C                WRITE (24,303) IVEC(I),LABJ(JJ),
+< C     :                         LABP((IASPAR(I)+3)/2),
+< C     :                         IVEC(II),LABJ(JJII),
+< C     :                         LABP((IASPAR(II)+3)/2),
+< C     :                         AFA1*HFC(1,NVEC*(I-1)+II),
+< C     :                         BFA1*HFC(3,NVEC*(I-1)+II)
+---
+>                 WRITE (24,303) IVEC(I),LABJ(JJ),
+>      :                         LABP((IASPAR(I)+3)/2),
+>      :                         IVEC(II),LABJ(JJII),
+>      :                         LABP((IASPAR(II)+3)/2),
+>      :                         AFA1*HFC(1,NVEC*(I-1)+II),
+>      :                         BFA1*HFC(3,NVEC*(I-1)+II)
+521,526c520,525
+< C              WRITE (24,303) IVEC(I),LABJ(JJ),
+< C     :                       LABP((IASPAR(I)+3)/2),
+< C     :                       IVEC(II),LABJ(JJII),
+< C     :                       LABP((IASPAR(II)+3)/2),
+< C     :                       AFA2*HFC(2,NVEC*(I-1)+II),
+< C     :                       BFA2*HFC(4,NVEC*(I-1)+II)
+---
+>               WRITE (24,303) IVEC(I),LABJ(JJ),
+>      :                       LABP((IASPAR(I)+3)/2),
+>      :                       IVEC(II),LABJ(JJII),
+>      :                       LABP((IASPAR(II)+3)/2),
+>      :                       AFA2*HFC(2,NVEC*(I-1)+II),
+>      :                       BFA2*HFC(4,NVEC*(I-1)+II)
+531,535c530,534
+< C              WRITE (24,303) IVEC(I),LABJ(JJ),
+< C     :                       LABP((IASPAR(I)+3)/2),
+< C     :                       IVEC(II),LABJ(JJII),
+< C     :                       LABP((IASPAR(II)+3)/2),0.0D 00,
+< C     :                       BFA3*HFC(5,NVEC*(I-1)+II)
+---
+>               WRITE (24,303) IVEC(I),LABJ(JJ),
+>      :                       LABP((IASPAR(I)+3)/2),
+>      :                       IVEC(II),LABJ(JJII),
+>      :                       LABP((IASPAR(II)+3)/2),0.0D 00,
+>      :                       BFA3*HFC(5,NVEC*(I-1)+II)
+561a561,662
+> *
+> *   Calculate the F-dependent matrix elemnts
+> *
+> *   Loop over the states
+> *
+>       DO 16 JB = 1,NVEC
+>         DO 15 JA = 1,NVEC
+>           JJB = IATJPO(JB)-1
+>           JJA = IATJPO(JA)-1
+>           IF ((JJA .EQ. JJB .AND. JJA .GT. 0) .OR.
+>      :        (JJB .GT. JJA)) THEN
+> *
+> *   Determine the possible F quantum numbers for the matrix element
+> *
+>             FFMIN = MAX (ABS (JJA-II),ABS (JJB-II))
+>             FFMAX = MIN (JJA+II,JJB+II)
+> *
+> *   Loop over the possible F quantum numbers
+> *
+>             IFLAG = 0
+>             DO 14 FF = FFMIN,FFMAX,2
+> *
+> *   Phase factor
+> *
+>               IF (MOD ((II+JJA-FF)/2,2) .EQ. 1) THEN
+>                 FACTOR1 = -1.0D 00
+>               ELSE
+>                 FACTOR1 =  1.0D 00
+>               ENDIF
+>               FACTOR2 =   FACTOR1
+>      :                  * SQRT (
+>      :                            ( DBLE (JJB)
+>      :                             +1.0D 00)
+>      :                          * ( DBLE (II)
+>      :                             +1.0D 00)
+>      :                         )
+> *
+> *   Determine the Racah W coefficients.
+> *
+> CGG              CALL DRACAH (II,JJA,II,JJB,FF,2,RAC1)
+>               CALL GRACAH1 (II,JJA,II,JJB,FF,2,RAC1)
+> CGG              CALL DRACAH (II,JJA,II,JJB,FF,4,RAC2)
+>               CALL GRACAH1 (II,JJA,II,JJB,FF,4,RAC2)
+> *
+> *   Obtain and output matrix elements for J,J
+> *
+>               IF ((JJA-JJB) .EQ. 0) THEN
+>                 HFSELT1 = FACTOR2*RAC1*HFC(1,NVEC*(JB-1)+JA)*TILDE1
+>                 HFSELT2 = FACTOR2*RAC2*HFC(3,NVEC*(JB-1)+JA)*TILDE2
+>                 IF (ABS (HFSELT1+HFSELT2) .GT.
+>      :              CUTOFF*10.0D-05) THEN
+>                   IF (IFLAG .EQ. 0) WRITE (24,304)
+>                   IFLAG = 1
+>                   WRITE (24,305) IVEC(JB),LABJ(JJB+1),
+>      :                           LABP((IASPAR(JB)+3)/2),
+>      :                           IVEC(JA),LABJ(JJA+1),
+>      :                           LABP((IASPAR(JA)+3)/2),
+>      :                           LABJ(FF+1),
+>      :                           HFSELT1+HFSELT2
+>                 ENDIF
+> *
+> *   Obtain and output matrix elements for J,J-1
+> *
+>               ELSEIF (ABS (JJA-JJB) .EQ. 2) THEN
+>                 HFSELT1 = FACTOR2*RAC1*HFC(2,NVEC*(JB-1)+JA)*TILDE1
+>                 HFSELT2 = FACTOR2*RAC2*HFC(4,NVEC*(JB-1)+JA)*TILDE2
+>                 IF (ABS (HFSELT1+HFSELT2) .GT.
+>      :              CUTOFF*10.0D-05) THEN
+>                   IF (IFLAG .EQ. 0) WRITE (24,304)
+>                   IFLAG = 1
+>                   WRITE (24,305) IVEC(JB),LABJ(JJB+1),
+>      :                           LABP((IASPAR(JB)+3)/2),
+>      :                           IVEC(JA),LABJ(JJA+1),
+>      :                           LABP((IASPAR(JA)+3)/2),
+>      :                           LABJ(FF+1),
+>      :                           HFSELT1+HFSELT2
+>                 ENDIF
+> *
+> *   Obtain and output matrix elements for J,J-2
+> *
+>               ELSEIF (ABS (JJA-JJB) .EQ. 4) THEN
+>                 HFSELT1 = 0.0D 00
+>                 HFSELT2 = FACTOR2*RAC2*HFC(5,NVEC*(JB-1)+JA)*TILDE2
+>                 IF (ABS (HFSELT1+HFSELT2) .GT.
+>      :              CUTOFF*10.0D-05) THEN
+>                   IF (IFLAG .EQ. 0) WRITE (24,304)
+>                   IFLAG = 1
+>                   WRITE (24,305) IVEC(JB),LABJ(JJB+1),
+>      :                           LABP((IASPAR(JB)+3)/2),
+>      :                           IVEC(JA),LABJ(JJA+1),
+>      :                           LABP((IASPAR(JA)+3)/2),
+>      :                           LABJ(FF+1),
+>      :                           HFSELT1+ HFSELT2
+>                 ENDIF
+>               ELSE
+>                 HFSELT1 = 0.0D 00
+>                 HFSELT2 = 0.0D 00
+>               ENDIF
+>   14        CONTINUE
+>           ENDIF
+>   15    CONTINUE
+>   16  CONTINUE
+per@Monster:~/programs/grasp/grasp2k_light/src/appl/rhfs_diag$ ls *.f
+angdata.f  chkplt.f  engouth.f  gethfd.f  getmixblock.f  hfs92.f  hfs_gg.f  matelt.f  rinthf.f  setdbg.f  setsum.f  strsum.f
+per@Monster:~/programs/grasp/grasp2k_light/src/appl/rhfs_diag$ diff matelt.f ../rhfs/matelt.f
+per@Monster:~/programs/grasp/grasp2k_light/src/appl/rhfs_diag$ diff rinthf.f ../rhfs/rinthf.f
+per@Monster:~/programs/grasp/grasp2k_light/src/appl/rhfs_diag$ diff setdbg.f ../rhfs/setdbg.f
+per@Monster:~/programs/grasp/grasp2k_light/src/appl/rhfs_diag$ diff setsum.f ../rhfs/setsum.f
+26c26
+< *         FILNAM2 = NAME(1:K-1)//'.choffd'
+---
+>          FILNAM2 = NAME(1:K-1)//'.choffd'
+29c29
+< *         FILNAM2 = NAME(1:K-1)//'.hoffd'
+---
+>          FILNAM2 = NAME(1:K-1)//'.hoffd'
+40,44c40,44
+< *      CALL OPENFL (24,FILNAM2,FORM,STATUS,IERR)
+< *      IF (IERR .NE. 0) THEN
+< *         PRINT *, 'Error when opening',FILNAM2
+< *         STOP
+< *      ENDIF
+---
+>       CALL OPENFL (24,FILNAM2,FORM,STATUS,IERR)
+>       IF (IERR .NE. 0) THEN
+>          PRINT *, 'Error when opening',FILNAM2
+>          STOP
+>       ENDIF
+per@Monster:~/programs/grasp/grasp2k_light/src/appl/rhfs_diag$ diff strsum.f ../rhfs/strsum.f
+34,36c34,36
+< C      WRITE (24,302) HFSI
+< C      WRITE (24,303) HFSD
+< C      WRITE (24,304) HFSQ
+---
+>       WRITE (24,302) HFSI
+>       WRITE (24,303) HFSD
+>       WRITE (24,304) HFSQ
+per@Monster:~/programs/grasp/grasp2k_light/src/appl/rhfs_diag$ 
+
