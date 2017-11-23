@@ -311,11 +311,11 @@
      :                NCORE,ELSTO,NTYPE,EMTBLOCK,MAXSPAN,NORBGEN)
 
           END IF
-          IF ((IR .EQ. IC) .OR. (DABS (EMTBLOCK(1,1)) .GT. CUTOFF)) THEN
-            NELC       = NELC + 1
-            EMT(NELC)  = EMTBLOCK(1,1)
-            IROW(NELC) = IR
-          ENDIF
+*          IF ((IR .EQ. IC) .OR. (DABS (EMTBLOCK(1,1)) .GT. CUTOFF)) THEN
+*            NELC       = NELC + 1
+*            EMT(NELC)  = EMTBLOCK(1,1)
+*            IROW(NELC) = IR
+*          ENDIF
 
    85   CONTINUE            
 
